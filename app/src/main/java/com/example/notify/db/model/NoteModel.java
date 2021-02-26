@@ -26,8 +26,7 @@ public class NoteModel implements Serializable {
 
     private String date;
 
-    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    private byte[] background;
+    private String background = null;
 
 
 
@@ -41,11 +40,11 @@ public class NoteModel implements Serializable {
     public NoteModel() {
     }
 
-    public byte[] getBackground() {
+    public String getBackground() {
         return background;
     }
 
-    public void setBackground(byte[] background) {
+    public void setBackground(String background) {
         this.background = background;
     }
 
@@ -87,7 +86,7 @@ public class NoteModel implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         NoteModel noteModel = (NoteModel) o;
         if (note_id != noteModel.note_id) return false;
-        return title != null ? title.equals(noteModel.title) : noteModel.title == null;
+        return Objects.equals(title, noteModel.title);
     }
 
     @Override

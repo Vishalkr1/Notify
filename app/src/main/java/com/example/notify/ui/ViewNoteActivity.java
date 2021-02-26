@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.notify.R;
 import com.example.notify.db.NotesDatabase;
 import com.example.notify.db.model.NoteModel;
+import com.example.notify.utils.BitmapUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -52,16 +53,16 @@ public class ViewNoteActivity extends AppCompatActivity {
             description.setText(note.getContent());
             date.setText(note.getDate());
 
-//            if(note.getBackground()!=null) {
-//                Bitmap bmp = BitmapFactory.decodeByteArray(note.getBackground(), 0, note.getBackground().length);
-//                Log.d("TAG", "displayNote: " + bmp);
-//            {
-//                image.setImageBitmap(bmp);
-//            }
-////            else{
-////                image.setImageResource(R.drawable.sample);
-////            }
-//            }
+            if(note.getBackground()!=null) {
+                Bitmap bmp = BitmapUtil.StringToBitMap(note.getBackground());
+                Log.d("TAG", "displayNote: " + bmp);
+                {
+                    image.setImageBitmap(bmp);
+                }
+            }
+            else{
+                image.setImageResource(R.drawable.sample);
+            }
         }
     }
 

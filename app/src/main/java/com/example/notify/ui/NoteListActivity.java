@@ -36,12 +36,12 @@ public class NoteListActivity extends AppCompatActivity implements NotesAdapter.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_list);
-        intitialiseViews();
+        initialiseViews();
         displayNotes();
     }
 
 
-    private void intitialiseViews() {
+    private void initialiseViews() {
         emptyList = findViewById(R.id.emptyList);
         add_note = findViewById(R.id.fab);
         notesList = findViewById(R.id.recycler_view);
@@ -95,6 +95,7 @@ public class NoteListActivity extends AppCompatActivity implements NotesAdapter.
                 activityReference.get().notes.clear();
                 activityReference.get().notes.addAll(notes);
                 activityReference.get().adapter.notifyDataSetChanged();
+                activityReference.get().UpdateEmptyView();
             }
         }
     }

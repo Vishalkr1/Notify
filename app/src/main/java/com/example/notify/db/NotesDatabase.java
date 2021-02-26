@@ -9,11 +9,12 @@ import androidx.room.TypeConverters;
 
 import com.example.notify.db.Dao.NotesDao;
 import com.example.notify.db.model.NoteModel;
+import com.example.notify.utils.BitmapUtil;
 import com.example.notify.utils.DateConverter;
 
 
 @Database(entities = {NoteModel.class}, version = 1)
-@TypeConverters(DateConverter.class)
+@TypeConverters({DateConverter.class, BitmapUtil.class})
 public abstract class NotesDatabase extends RoomDatabase {
     public abstract NotesDao getNotesDao();
 

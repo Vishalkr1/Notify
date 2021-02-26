@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,18 +27,22 @@ import com.example.notify.R;
 import com.example.notify.db.NotesDatabase;
 import com.example.notify.db.model.NoteModel;
 import com.example.notify.utils.AppUtil;
+import com.example.notify.utils.BitmapUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
 
 public class AddNoteActivity extends AppCompatActivity {
     EditText title, description;
     TextView date_created;
     FloatingActionButton save, capture;
-    Bitmap background;
+    Bitmap upload_photo;
     ImageView photo;
     NoteModel note;
     NotesDatabase database ;
+    private String imageSource = null;
     private static final int CAMERA_REQUEST = 1888;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
@@ -61,8 +66,11 @@ public class AddNoteActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK)
         {
-            background = (Bitmap) data.getExtras().get("data");
-            photo.setImageBitmap(background);
+            upload_photo = (Bitmap) data.getExtras().get("data");
+            photo.setImageBitmap(upload_photo);
+            //                InputStream is = getContentResolver().openInputStream(imageUri);
+//                Bitmap bitmap = BitmapFactory.decodeStream(is);
+            imageSource = BitmapUtil.BitMapToString(upload_photo);
         }
     }
 
@@ -98,6 +106,7 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     private void initialiseViews() {
+//        background = Bitmap.createBitmap()
         capture = findViewById(R.id.capture);
         photo = findViewById(R.id.photo);
         title = findViewById(R.id.add_title);
@@ -106,7 +115,7 @@ public class AddNoteActivity extends AppCompatActivity {
         date_created = findViewById(R.id.date_created);
         database = NotesDatabase.getInstance(this);
         date_created.setText(AppUtil.getFormattedDateString(AppUtil.getCurrentDateTime()));
-        background = BitmapFactory.decodeResource(getResources(), R.drawable.sample);
+        upload_photo = BitmapFactory.decodeResource(getResources(), R.drawable.sample);
     }
 
 
@@ -126,6 +135,9 @@ public class AddNoteActivity extends AppCompatActivity {
 //                    background.copyPixelsToBuffer(byteBuffer);
 //                    byte[] byteArray = byteBuffer.array();
 //                    note.setBackground(byteArray);}
+            if(imageSource!=null){
+                note.setBackground(imageSource);
+            }
             new InsertTask(AddNoteActivity.this, note).execute();
         }
     }

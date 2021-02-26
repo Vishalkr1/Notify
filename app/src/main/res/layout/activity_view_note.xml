@@ -6,7 +6,8 @@
         android:id="@+id/taskImage"
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
+        android:alpha="0.75"
         android:src="@drawable/sample"/>
     <LinearLayout
         android:layout_width="match_parent"
