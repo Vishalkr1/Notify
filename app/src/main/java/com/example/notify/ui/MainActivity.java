@@ -22,6 +22,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, NoteListActivity.class));
                 finish();
             }
-        }, 200);
+        }, 1000);
     }
 }
